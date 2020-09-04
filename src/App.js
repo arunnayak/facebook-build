@@ -1,24 +1,30 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Header from './Header/Header';
+import Sidebar from './Sidebar/Sidebar';
+import Feed from './Feed/Feed';
+import Widget from './Widget/Widget';
+import Login from './Login/Login';
+import { useStateValue } from './$Data/stateProvider';
 
 function App() {
+  const [{ user }] = useStateValue();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      {!user ? (
+        <Login />
+      ) : (
+        <> {/* jsx fragmentatiot, needed when theres multiple childs, wrap inside one div then you dont need it */}
+          <div className="app__header">
+          <Header />
+          </div>
+          <div className="app__body">
+            <Sidebar/>
+            <Feed/>
+            <Widget />
+          </div>
+        </>
+      )}
     </div>
   );
 }
